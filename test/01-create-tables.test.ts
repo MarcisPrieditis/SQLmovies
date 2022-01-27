@@ -12,7 +12,13 @@ import {
 import { tableInfo, indexList } from "../src/queries/table-info";
 
 const CREATE_MOVIES_TABLE = `CREATE TABLE ${MOVIES}(
-  id integer NOT NULL PRIMARY KEY,
+  id integer NOT NULL PRIMARY KEY
+    REFERENCES movie_genres(movie_id) ON DELETE CASCADE
+    REFERENCES movie_directors(movie_id) ON DELETE CASCADE
+    REFERENCES movie_actors(movie_id) ON DELETE CASCADE
+    REFERENCES movie_keywords(movie_id) ON DELETE CASCADE
+    REFERENCES movie_production_companies(movie_id) ON DELETE CASCADE
+    REFERENCES movie_ratings(movie_id) ON DELETE CASCADE,
   imdb_id text NOT NULL,
   popularity real NOT NULL,
   budget real NOT NULL,
