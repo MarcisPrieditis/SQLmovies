@@ -121,8 +121,7 @@ describe("Queries Across Tables", () => {
     "should select all movies called Life and return amount of actors",
     async (done) => {
       const query = `SELECT original_title, count(*) AS count
-      FROM ${ACTORS}
-      INNER JOIN ${MOVIE_ACTORS} ON actors.id = movie_actors.actor_id
+      FROM ${MOVIE_ACTORS}
       INNER JOIN ${MOVIES} ON movie_actors.movie_id = movies.id
       WHERE original_title = 'Life'`;
       const result = await db.selectSingleRow(query);

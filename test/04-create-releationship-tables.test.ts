@@ -7,39 +7,45 @@ import {
   MOVIE_PRODUCTION_COMPANIES,
   MOVIE_RATINGS,
   MOVIES,
+  PRODUCTION_COMPANIES,
+  KEYWORDS,
+  DIRECTORS,
+  ACTORS,
+  GENRES,
 } from "../src/table-names";
 import { Database } from "../src/database";
 import { tableInfo } from "../src/queries/table-info";
 import { minutes, Log } from "./utils";
 
 const CREATE_MOVIE_GENRES_TABLE = `CREATE TABLE ${MOVIE_GENRES} (
-  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE RESTRICT,
-  genre_id integer NOT NULL REFERENCES genres(id) ON DELETE RESTRICT,
-  primary key (movie_id, genre_id)
-  
+  movie_id integer NOT NULL,
+  genre_id integer NOT NULL,
+  primary key (movie_id, genre_id),
+  FOREIGN KEY(movie_id) REFERENCES ${MOVIES}(id)
+  FOREIGN KEY(genre_id) REFERENCES ${GENRES}(id)
 )`; //FOREIGN KEY(movie_id) REFERENCES ${MOVIES}(id) ON DELETE RESTRICT
 
 const CREATE_MOVIE_ACTORS_TABLE = `CREATE TABLE ${MOVIE_ACTORS} (
-  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE RESTRICT,
-  actor_id integer NOT NULL REFERENCES actors(id) ON DELETE RESTRICT,
+  movie_id integer NOT NULL REFERENCES ${MOVIES}(id),
+  actor_id integer NOT NULL REFERENCES ${ACTORS}(id),
   primary key (movie_id, actor_id)
 )`;
 
 const CREATE_MOVIE_DIRECTORS_TABLE = `CREATE TABLE ${MOVIE_DIRECTORS} (
-  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE RESTRICT,
-  director_id integer NOT NULL REFERENCES directors(id) ON DELETE RESTRICT,
+  movie_id integer NOT NULL REFERENCES ${MOVIES}(id),
+  director_id integer NOT NULL REFERENCES ${DIRECTORS}(id),
   primary key (movie_id, director_id)
 )`;
 
 const CREATE_MOVIE_KEYWORDS_TABLE = `CREATE TABLE ${MOVIE_KEYWORDS} (
-  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE RESTRICT,
-  keyword_id integer NOT NULL REFERENCES keywords(id) ON DELETE RESTRICT,
+  movie_id integer NOT NULL REFERENCES ${MOVIES}(id),
+  keyword_id integer NOT NULL REFERENCES ${KEYWORDS}(id),
   primary key (movie_id, keyword_id)
 )`;
 
 const CREATE_MOVIE_PRODUCTION_COMPANIES_TABLE = `CREATE TABLE ${MOVIE_PRODUCTION_COMPANIES} (
-  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE RESTRICT,
-  company_id integer NOT NULL REFERENCES production_companies(id) ON DELETE RESTRICT,
+  movie_id integer NOT NULL REFERENCES ${MOVIES}(id) ,
+  company_id integer NOT NULL REFERENCES ${PRODUCTION_COMPANIES}(id),
   primary key (movie_id, company_id)
 )`;
 

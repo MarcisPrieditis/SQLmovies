@@ -14,7 +14,12 @@ import {
   GENRES,
   KEYWORDS,
   MOVIES,
+  MOVIE_ACTORS,
+  MOVIE_DIRECTORS,
   MOVIE_GENRES,
+  MOVIE_KEYWORDS,
+  MOVIE_PRODUCTION_COMPANIES,
+  MOVIE_RATINGS,
   PRODUCTION_COMPANIES,
 } from "../src/table-names";
 import { minutes } from "./utils";
@@ -134,9 +139,16 @@ describe("Foreign Keys", () => {
   it(
     "should be able to delete movie",
     async (done) => {
-      const movieId = 5915;
-      const query = `DELETE FROM ${MOVIES} 
-      WHERE id = ${movieId}`;
+      const movieId = 18; //5915 id nepastāv, max id 2999
+      const query = `
+      DELETE FROM ${MOVIE_RATINGS} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIE_GENRES} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIE_ACTORS} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIE_DIRECTORS} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIE_KEYWORDS} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIE_PRODUCTION_COMPANIES} WHERE movie_id = ${movieId};
+      DELETE FROM ${MOVIES} WHERE id = ${movieId};
+      `;
 
       await db.delete(query);
 
